@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: root
+    password: 1234
+    url: jdbc:mysql:///sell?useSSL=false&characterEncoding=utf-8&useUnicode=true
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    show-sql: true
+server:
+  context-path: /sell
+
+
