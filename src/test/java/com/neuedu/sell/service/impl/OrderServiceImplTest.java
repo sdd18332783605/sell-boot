@@ -36,4 +36,12 @@ public class OrderServiceImplTest {
 
 
     }
+
+    @Test
+    public void findOne(){
+        System.out.println(
+                orderService.findOne("1541157026424")
+        );
+
+    }
 }

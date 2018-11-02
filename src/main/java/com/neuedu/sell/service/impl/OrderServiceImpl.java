@@ -1,5 +1,6 @@
 package com.neuedu.sell.service.impl;
 
+import com.neuedu.sell.converter.OrderMaster2OrderDTOConverter;
 import com.neuedu.sell.dto.CartDTO;
 import com.neuedu.sell.dto.OrderDTO;
 import com.neuedu.sell.entity.OrderDetail;
@@ -81,7 +82,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO findOne(String orderId) {
-        return null;
+        OrderMaster orderMaster=orderMasterRepository.findOne(orderId);
+        //判断是否真的有点餐
+        if (orderMaster == null){
+            new SellException(ResultEnum.ORDER_NOT_EXIST);
+        }
+        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
+        //判断订单详情是否为空
+        if (orderDetailList.size() == 0){
+            new SellException(ResultEnum.ORDERDETAIL_NOT_EXIST);
+        }
+        //将orderMaster和orderDetailList数据添加到OrderDTO
+        OrderDTO orderDTO = OrderMaster2OrderDTOConverter.convert(orderMaster);
+        orderDTO.setOrderDetailList(orderDetailList);
+        return orderDTO;
     }
 
     @Override
